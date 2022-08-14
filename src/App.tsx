@@ -9,6 +9,22 @@ import { useState } from 'react';
 function App() {
 
   let deckNames: Array<string>= [];
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("https://nodeforge.herokuapp.com/");
+      const json = await response.text();
+      const obj = JSON.parse(json);
+      
+      for (let i=0; i<10; i++) {
+        let pos = i.toString();
+        deckNames.push(obj["data"][pos]["name"]);
+      }
+      setState(deckNames);
+    })();
+
+    
+    console.log(deckNames);
+  },[]);
 
   const[state, setState] = useState<Array<string>>([
   "Wielkoduszna Józefa z Trzebini",
